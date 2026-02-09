@@ -8,7 +8,7 @@ import ProgressChart from "../components/ProgressChart";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")) || []
+     JSON.parse(localStorage.getItem("tasks")) || []
   );
 
   const [sessions, setSessions] = useState(

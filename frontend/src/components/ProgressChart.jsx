@@ -20,10 +20,13 @@ export default function ProgressChart({ tasks }) {
     const dateStr = date.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
     const dayTasks = tasks.filter((t) => {
       if (!t.completedAt) return false;
-      // Parse "DD/MM/YYYY HH:mm:ss" format
-      const parts = t.completedAt.split(" ")[0];
+      // Parse various id-ID formats: "DD/MM/YYYY HH:mm:ss" or "D/M/YYYY, HH.mm.ss"
+      const cleaned = t.completedAt.replace(",", "").trim();
+      const parts = cleaned.split(" ")[0];
       if (!parts) return false;
-      const [day, month, year] = parts.split("/").map(Number);
+      const segments = parts.split("/").map(Number);
+      if (segments.length < 3) return false;
+      const [day, month, year] = segments;
       if (!day || !month || !year) return false;
       return (
         day === date.getDate() &&
@@ -59,9 +62,12 @@ export default function ProgressChart({ tasks }) {
   const today = new Date();
   const todayTasks = tasks.filter((t) => {
     if (!t.completedAt) return false;
-    const parts = t.completedAt.split(" ")[0];
+    const cleaned = t.completedAt.replace(",", "").trim();
+    const parts = cleaned.split(" ")[0];
     if (!parts) return false;
-    const [day, month, year] = parts.split("/").map(Number);
+    const segments = parts.split("/").map(Number);
+    if (segments.length < 3) return false;
+    const [day, month, year] = segments;
     return day === today.getDate() && month === today.getMonth() + 1 && year === today.getFullYear();
   });
   const todayMinutes = todayTasks.reduce((sum, t) => sum + (t.duration || 0), 0);
