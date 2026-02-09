@@ -4,6 +4,7 @@ import Stats from "../components/Stats";
 import TaskItem from "../components/TaskItem";
 import DailyNote from "../components/DailyNote";
 import AITaskBreakdown from "../components/AITaskBreakdown";
+import ProgressChart from "../components/ProgressChart";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState(
@@ -72,6 +73,7 @@ export default function Dashboard() {
   <DailyNote />
       <Timer onFinish={handleTimerFinish} />
       <Stats sessions={sessions} />
+      <ProgressChart tasks={tasks} />
 
 
       <div className="mt-6 bg-white rounded-2xl shadow-lg p-6">
